@@ -1,0 +1,469 @@
+/* 1. Reset i ustawienia globalne */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Pixar';
+  src: url('Pixar.ttf');
+}
+
+body {
+  margin: 0;
+  padding-bottom: 20px;
+  background: #000814;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  /* Ukryte domyślnie dla mechanizmu autoryzacji w JS */
+  display: none;
+  /* Responsywna czcionka bazowa */
+  font-size: clamp(0.85rem, 1.2vw, 1.2rem);
+  overflow-x: hidden;
+}
+
+/* 2. Główny kontener treści */
+main {
+  /* Dynamiczny odstęp od góry */
+  padding-top: clamp(220px, 25vh, 320px);
+  width: 80vw;
+  max-width: 80vw !important;
+  margin: 0 auto;
+  padding-left: clamp(15px, 3vw, 40px);
+  padding-right: clamp(15px, 3vw, 40px);
+}
+
+/* 3. Header (Uniwersalny, płynny) */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+  background: linear-gradient(90deg, #ffb80a 0%, #ffd24a 50%, #ffb80a 100%);
+}
+
+.headercolor {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap; 
+  gap: clamp(0.5rem, 2.5vw, 3rem);
+  padding: clamp(0.5rem, 1vw, 0.8rem) clamp(1rem, 2vw, 2rem);
+  border-bottom: 2px solid #000;
+  min-height: 10vh;
+}
+
+/* Logo */
+.headercolor img {
+  height: clamp(45px, 8vw, 100px) !important;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.headercolor img:hover {
+  transform: scale(1.1);
+}
+
+/* Tytuł */
+.headertext1 {
+  color: #000814;
+  font-size: clamp(2rem, 4vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.6);
+  transition: color 0.3s;
+}
+
+/* Kontener przycisków */
+#listbtns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#listbtns .listag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(0.5rem, 1vw, 1.2rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Przyciski nawigacji */
+#listbtns .listag li a,
+#listbtns .listag .header-btn {
+  background: transparent;
+  border: 2px solid #000814;
+  color: #000814;
+  padding: clamp(0.6rem, 1vw, 1rem) clamp(1rem, 1.5vw, 1.8rem);
+  font-size: clamp(0.9rem, 1.2vw, 1.3rem);
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: clamp(120px, 11vw, 190px);
+  text-align: center;
+  white-space: nowrap;
+}
+
+#listbtns .listag li a:hover,
+#listbtns .listag .header-btn:hover {
+  background: #000814;
+  color: #ffb80a;
+  transform: scale(1.05);
+}
+
+/* Pasek informacyjny */
+.infobar {
+  width: 100%;
+  background: #001d3d;
+  color: #ffb80a;
+  padding: clamp(0.5rem, 1vh, 0.8rem) 0;
+  font-size: clamp(0.75rem, 1vw, 2rem);
+  font-weight: 500;
+  border-bottom: 2px solid #ffb80a;
+  text-shadow: 0 0 4px rgba(255, 184, 10, 0.6);
+  z-index: 999;
+  text-align: center;
+}
+
+/* 4. Dropdown "Moje konto" - Styl identyczny jak w client.css */
+.account-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.account-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  
+  /* Skalowanie szerokości - identyczne jak w client.css */
+  min-width: clamp(200px, 15vw, 300px);
+  
+  background: #0a1a2f;
+  /* Cieńsze, półprzezroczyste obramowanie (jak w client.css) */
+  border: 1px solid rgba(255,184,10,0.3);
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  z-index: 2000;
+  display: none; /* JS steruje widocznością */
+}
+
+/* Nick użytkownika */
+.account-nick {
+  font-weight: 700;
+  color: #ffb80a;
+  margin-bottom: 8px;
+  word-break: break-word;
+  font-size: clamp(1.1rem, 1.5vw, 1.6rem);
+  /* W client.css tekst jest domyślnie do lewej w PC */
+  text-align: left; 
+}
+
+/* Przyciski w menu */
+.account-action {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: none;
+  text-align: left;
+  /* Padding i font identyczny jak w client.css */
+  padding: clamp(8px, 0.8vw, 14px) clamp(10px, 1vw, 16px);
+  font-size: clamp(1rem, 1.3vw, 1.4rem);
+  
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s; /* Płynne przejście tła */
+}
+
+.account-action:hover {
+  /* Biały tint (zamiast żółtego), tak jak w client.css */
+  background: rgba(255,255,255,0.1);
+}
+
+.account-logout {
+  color: #ff6b6b;
+}
+
+.dropdown-sep {
+  border: 0;
+  height: 1px;
+  /* Bardziej subtelna linia (0.06 alpha) */
+  background: rgba(255,255,255,0.06);
+  margin: 6px 0;
+}
+
+/* Ukrywanie elementów zależnie od roli */
+.user-only, .admin-only {
+  display: none;
+}
+
+/* 5. Filtry i Widok */
+.sectioncolor1 h1 {
+  font-size: clamp(1.8rem, 4vw, 3rem); 
+  margin-left: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.filters-container {
+    background: #001d3d;
+    border: 2px solid #ffb80a;
+    padding: clamp(15px, 2.5vw, 30px);
+    border-radius: 15px;
+    display: flex;
+    gap: clamp(10px, 1.5vw, 20px);
+    flex-wrap: wrap; 
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: clamp(20px, 4vw, 40px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+.searchbar, .filter-select {
+    padding: clamp(10px, 1.2vw, 14px);
+    border-radius: 8px;
+    border: 2px solid #ffb80a;
+    background: #000814;
+    color: #ffb80a;
+    font-weight: 600;
+    font-size: clamp(0.9rem, 1.1vw, 3.0rem);
+    flex-grow: 1;
+}
+
+.searchbar { min-width: 200px; }
+.filter-select { min-width: 140px; }
+
+.view-switch {
+    display: flex;
+    gap: 8px;
+    background: #000814;
+    padding: 6px;
+    border-radius: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.view-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: #ffb80a;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: clamp(0.9rem, 1.1vw, 2rem);
+    white-space: nowrap;
+    flex: 1;
+}
+
+.view-btn.active {
+    background: #ffb80a;
+    color: #001d3d;
+}
+
+/* 6. Toggle: Aktualnie w kinie */
+.playing-toggle-box {
+    background: #001d3d;
+    border-left: 6px solid #ffb80a;
+    padding: clamp(15px, 2vw, 25px);
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.playing-title {
+    font-size: clamp(1.1rem, 2.5vw, 5rem);
+    font-weight: 800;
+    color: #ffb80a;
+    margin: 0;
+}
+
+.playing-switch {
+    width: clamp(55px, 6vw, 90px);
+    height: clamp(28px, 3.5vw, 40px);
+    background: #000814;
+    border: 2px solid #ffb80a;
+    border-radius: 20px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.playing-switch::after {
+    content: "";
+    position: absolute;
+    width: clamp(20px, 2.5vw, 24px);
+    height: clamp(20px, 2.5vw, 24px);
+    background: #ffb80a;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 4px;
+    transition: 0.3s ease;
+}
+
+.playing-switch.active { background: #ffb80a; }
+.playing-switch.active::after { 
+    left: auto;
+    right: 4px; 
+    background: #001d3d; 
+}
+
+/* 7. Grid Filmów (Responsywny) */
+#movieList {
+    display: grid;
+    gap: clamp(15px, 3vw, 35px);
+    grid-template-columns: repeat(auto-fill, minmax(clamp(140px, 15vw, 500px), 1fr));
+}
+
+.view-grid .movie-card {
+    background: #001d3d;
+    border: 2px solid rgba(255,184,10,0.2);
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s;
+    height: 100%;
+}
+
+.view-grid .movie-card:hover {
+    transform: translateY(-8px);
+    border-color: #ffb80a;
+    box-shadow: 0 10px 30px rgba(255,184,10,0.3);
+}
+
+.view-grid .movie-card img {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+}
+
+.view-grid .movie-text {
+    padding: clamp(10px, 1.5vw, 20px);
+    text-align: center;
+}
+
+.view-grid .movie-desc {
+    display: none !important;
+}
+.movie-title {
+    color: #ffb80a;
+    font-size: clamp(1.1rem, 1.5vw, 4rem);
+    font-weight: 700;
+    margin: 0;
+}
+.movie-meta {
+    color: #ffd24a;
+    font-size: clamp(0.5rem, 0.9vw, 2rem);
+    opacity: 0.8;
+}
+/* 8. Widok Listy */
+.view-list {
+    grid-template-columns: 1fr !important;
+}
+
+.view-list .movie-wrapper {
+    width: 100%;
+}
+
+.view-list .movie-card {
+    background: #001d3d;
+    display: flex;
+    flex-direction: row;
+    border-radius: 15px;
+    border: 2px solid rgba(255,184,10,0.2);
+    overflow: hidden;
+    align-items: center;
+}
+
+.view-list .movie-card img {
+    width: clamp(100px, 15vw, 400px);
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.view-list .movie-content, .view-list .movie-text {
+    padding: clamp(15px, 2vw, 25px);
+    flex-grow: 1;
+}
+
+.view-list .movie-desc {
+    display: block;
+    color: #ccc;
+    font-size: 0.95rem;
+    margin-top: 10px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Lista na bardzo wąskich ekranach */
+@media (max-width: 500px) {
+    .view-list .movie-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .view-list .movie-card img {
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+        object-position: top;
+    }
+}
+
+/* 9. Powiadomienia */
+.notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  font-family: sans-serif;
+  font-size: 16px;
+  display: none;
+  z-index: 100000;
+  text-align: center;
+  white-space: pre-wrap;
+}
+
+.notification.show {
+  display: block;
+  animation: fadeInOutNotification 3s forwards;
+}
+
+@keyframes fadeInOutNotification {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}

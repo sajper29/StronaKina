@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Moje rezerwacje</title>
+    <meta name="keywords" content="kino,eti,ETI,internet,biblioteka filmowa">
+    <meta name="description" content="Cinema App">
+    <meta name="author" content="Maślanka Szymon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/user_reservations.css" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="/img/logo.png">
+</head>
+<body>
+<div id="notification-container"></div>
+<div id="confirm-container" class="confirm-container">
+  <div class="confirm-box">
+    <p id="confirm-message">Czy na pewno chcesz anulować rezerwację?</p>
+    <div class="confirm-actions">
+      <button id="confirm-yes">Tak</button>
+      <button id="confirm-no">Nie</button>
+    </div>
+  </div>
+</div>
+
+
+<header>
+    <div class="container-fluid headercolor">
+        <div class="d-flex justify-content-center align-items-center gap-4 flex-wrap">
+            <img src="/img/logo.png" class="img-fluid" style="height: 70px; width: auto;">
+            <h1 class="headertext1 mb-0">Kino</h1>
+
+            <div class="col justify-content-start" id="listbtns">
+                <ol class="listag d-flex align-items-center mb-0">
+                    <li><a href="client.html" class="header-btn">Strona główna</a></li>
+                    <li><a href="biblioteka.html" class="header-btn">Biblioteka</a></li>
+
+                    <li id="accountMenuItem" style="position:relative;">
+                        <div class="account-wrapper">
+                            <button id="accountBtn" class="header-btn">Moje konto ▾</button>
+                            <div id="accountDropdown" class="account-dropdown" aria-hidden="true">
+                                <div class="account-nick">—</div>
+                                <hr class="dropdown-sep"/>
+                                <button id="openSettingsAdmin" class="account-action admin-only">Panel administratora</button>
+                                <button id="openSettingsClient" class="account-action user-only">Ustawienia konta</button>
+                                <button id="wyloguj" class="account-action account-logout">Wyloguj</button>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="infobar">
+        <div class="container-fluid text-center">
+            <strong>ETIKINO</strong> — najlepsze kino w Trójmieście • Czynne codziennie od 9:00 do 23:00 • Tel: <strong>123 456 789</strong>
+        </div>
+    </div>
+</header>
+
+
+  <div class="container">
+<div class="reservations-page sectioncolor1">
+  <h1>Moje rezerwacje</h1> <!-- nowy nagłówek -->
+</div>
+
+  <div id="reservationsContainer"></div>
+
+  </div>
+
+  <script src="/js/user_reservations.js"></script>
+</body>
+</html>

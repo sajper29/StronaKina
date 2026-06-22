@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administratora</title>
+    <link rel="stylesheet" href="/css/admin_panel.css">
+    <meta name="keywords" content="kino,eti,ETI,internet,biblioteka filmowa">
+    <meta name="description" content="Cinema App">
+    <meta name="author" content="Maślanka Szymon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/img/logo.ico">
+</head>
+
+<body style="display:none;">
+<div id="notification-container"></div>
+<div id="confirm-container" class="confirm-container">
+  <div class="confirm-box">
+    <p id="confirm-message">Czy na pewno chcesz anulować rezerwację?</p>
+    <div class="confirm-actions">
+      <button id="confirm-yes">Tak</button>
+      <button id="confirm-no">Nie</button>
+    </div>
+  </div>
+</div>
+<header>
+    <h1>Panel Administratora</h1>
+    <button id="backBtn">Wróć</button>
+    <button id="logoutBtn">Wyloguj</button>
+</header>
+
+<main class="settings-wrapper">
+    <div class="settings-grid">
+
+        <div class="left-panel">
+            <h2>Filmy w kinie</h2>
+            <div id="onScreenMovies" class="movies-container"></div>
+
+            <h3>Dodaj nowy film do wyświetlania</h3>
+            <form id="addOnScreenForm" class="form-box">
+                <input type="text" id="movieSearch" placeholder="Szukaj filmu po nazwie" autocomplete="off" required>
+                <ul id="movieSuggestions" class="suggestions-list"></ul>
+
+                <select name="screen_id" required>
+                    <option value="">Wybierz salę</option>
+                </select>
+
+               <label for="screeningDate">Data seansu:</label>
+<input type="date" name="screening_date" id="screeningDate" required>
+
+<label for="startTime">Godzina:</label>
+<input type="time" name="start_time" id="startTime" required>
+
+                <input type="number" name="price" placeholder="Cena" required step="0.01" min="0">
+                <button type="submit">Dodaj do wyświetlania</button>
+            </form>
+        </div>
+
+<div class="left-panel">
+        <h2>Użytkownicy</h2>
+        <div id="usersList"></div>
+
+        <hr style="border: 0; border-top: 1px solid #444; margin: 30px 0;">
+
+        <h2>Historia filmów</h2>
+        <div id="historyMovies" class="movies-container"></div>
+    </div>
+
+
+    </div>
+</main>
+
+<script src="/js/admin_panel.js"></script>
+</body>
+</html>

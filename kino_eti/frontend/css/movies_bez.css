@@ -1,0 +1,511 @@
+/* 1. Reset i ustawienia globalne */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: Arial, Helvetica, sans-serif;
+  src: url(Pixar.ttf);
+}
+
+body {
+  margin: 0;
+  padding-bottom: 20px;
+  background: #000814;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  display: none;
+
+  font-size: clamp(0.9rem, 1.1vw, 1.2rem);
+  overflow-x: hidden;
+}
+
+/* 2. Główny kontener treści */
+main {
+  padding-top: clamp(160px, 20vh, 300px);
+  width: 80vw;
+  max-width: 80vw !important;
+  margin: 0 auto;
+  padding-left: clamp(15px, 3vw, 40px);
+  padding-right: clamp(15px, 3vw, 40px);
+}
+
+/* 3. Header (Uniwersalny, płynny) */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+  background: linear-gradient(90deg, #ffb80a 0%, #ffd24a 50%, #ffb80a 100%);
+}
+
+.headercolor {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap; 
+  gap: clamp(1rem, 2.5vw, 3rem);
+  padding: clamp(0.5rem, 1vw, 0.8rem) clamp(1rem, 2vw, 2rem);
+  border-bottom: 2px solid #000;
+  min-height: 10vh;
+}
+
+/* Logo */
+.headercolor img {
+  height: clamp(45px, 8vw, 80px) !important;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.headercolor img:hover {
+  transform: scale(1.1);
+}
+
+/* Tytuł */
+.headertext1 {
+  color: #000814;
+  font-size: clamp(2rem, 4vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.6);
+  transition: color 0.3s;
+}
+
+.headertext1:hover {
+  color: #662837;
+}
+
+/* Kontener przycisków */
+#listbtns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#listbtns .listag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(0.5rem, 1vw, 1.2rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Przyciski nawigacji */
+#listbtns .listag li a,
+#listbtns .listag .header-btn,
+#logbutton,
+#regbutton {
+  background: transparent;
+  border: 2px solid #000814;
+  color: #000814;
+  padding: clamp(0.6rem, 1vw, 0.8rem) clamp(1rem, 1.5vw, 1.8rem);
+  font-size: clamp(0.9rem, 1.2vw, 2rem);
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
+}
+
+#listbtns .listag li a:hover,
+#listbtns .listag .header-btn:hover,
+#logbutton:hover,
+#regbutton:hover {
+  background: #000814;
+  color: #ffb80a;
+  transform: scale(1.05);
+}
+
+/* Pasek informacyjny */
+.infobar {
+  width: 100%;
+  background: #001d3d;
+  color: #ffb80a;
+  padding: clamp(0.5rem, 1vh, 0.8rem) 0;
+  font-size: clamp(0.75rem, 1vw, 2rem);
+  font-weight: 500;
+  border-bottom: 2px solid #ffb80a;
+  text-shadow: 0 0 4px rgba(255, 184, 10, 0.6);
+  z-index: 999;
+  text-align: center;
+  position: relative;
+}
+
+/* 4. Sekcje i kontenery */
+.sectioncolor1 {
+    background: #001d3d;
+    padding: clamp(15px, 2vw, 25px);
+    border-left: 6px solid #ffb80a;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.sectioncolor1 h1 {
+    color: #ffb80a;
+    font-weight: 800;
+    font-size: clamp(1.5rem, 3vw, 3rem);
+    margin: 0;
+}
+
+/* 5. Szczegóły Filmu */
+#movieDetails {
+    background: #001d3d;
+    border: 2px solid rgba(255,184,10,0.3);
+    border-radius: 12px;
+    padding: clamp(15px, 2vw, 30px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+#moviePoster {
+    border-radius: 8px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
+}
+
+#moviePoster:hover {
+    transform: scale(1.02);
+}
+
+#movieMeta {
+    font-size: clamp(1rem, 1.2vw, 3rem);
+    color: #ffd24a;
+    margin-bottom: 1rem;
+}
+
+#movieDesc {
+    font-size: clamp(0.95rem, 1.1vw, 2rem);
+    line-height: 1.6;
+    color: #e0e0e0;
+}
+
+#movieExtra {
+    font-size: 0.95rem;
+    color: #ffb80a;
+    margin-top: 15px;
+}
+
+/* 6. Seanse */
+#movieShowings {
+    margin-top: 30px;
+    padding: clamp(15px, 2vw, 25px);
+    background: #001d3d;
+    border: 2px solid rgba(255,184,10,0.3);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    color: #ffb80a;
+    font-size: clamp(0.5rem, 1vw, 3rem);
+}
+
+#movieShowings h4 {
+    margin-bottom: 15px;
+    font-size: clamp(1.2rem, 1.5vw, 3rem);
+    font-weight: 700;
+}
+
+#movieShowings .showing {
+    display: flex;
+    flex-wrap: wrap; 
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: rgba(0,0,0,0.3);
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+#movieShowings .showing:hover {
+    background: rgba(255,184,10,0.1);
+}
+
+#movieShowings .showing span {
+    font-size: clamp(0.9rem, 1.1vw, 2rem);
+    color: #fff;
+}
+
+#movieShowings .showing .reserveBtn {
+    background: #ffb80a;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    color: #001d3d;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    margin-left: auto; 
+}
+
+#movieShowings .showing .reserveBtn:hover {
+    background: #ffc948;
+    transform: scale(1.05);
+}
+
+/* 7. Komentarze */
+#movieComments {
+    background: #001d3d;
+    border: 2px solid rgba(255,184,10,0.3);
+    border-radius: 12px;
+    padding: clamp(15px, 2vw, 25px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    color: #ffb80a;
+    margin-top: 30px;
+}
+
+/* Kontener nagłówka komentarzy i selecta - responsywny */
+#commentsPerPageContainer {
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.commentsTitle {
+    font-size: clamp(1.2rem, 1.5vw, 3rem);
+    font-weight: 700;
+}
+
+.commentsLabel {
+    font-size: clamp(0.8rem, 1vw, 2.5rem);
+    color: #ccc;
+}
+
+#commentsList .comment {
+    background: rgba(0,0,0,0.3);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+#commentsList .comment:hover {
+    background: rgba(255,184,10,0.1);
+}
+
+#commentsList .comment p {
+    margin: 8px 0 0;
+    color: #e0e0e0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: clamp(0.9rem, 1vw, 4rem);
+}
+
+#commentsList .commentDate {
+    font-size: 0.8rem;
+    color: #888;
+    margin-left: 8px;
+}
+
+/* Paginacja */
+#commentsPagination {
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+#pageNumbers button {
+    margin: 0 2px;
+    padding: 5px 10px;
+}
+#commentText {
+    font-size: clamp(0.9rem, 1vw, 4rem);
+}
+/* 8. Formularze (Login/Rejestracja) - Responsywne */
+#login, #register {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+
+  width: clamp(280px, 85vw, 420px);
+  max-height: 85vh;
+    overflow-y: auto; 
+    
+    background-color: #0a1a2f;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.8);
+    padding: clamp(20px, 3vw, 30px);
+    z-index: 2000;
+    border: 2px solid #ffb80a;
+    
+
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
+}
+
+#login::-webkit-scrollbar, 
+#register::-webkit-scrollbar {
+    display: none;
+}
+
+#login h2, #register h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffb80a;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 2vw, 5rem);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #ffb80a;
+    font-size: clamp(0.8rem, 1vw, 3rem);
+}
+
+#login input, #register input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #001028;
+    color: #fff;
+    font-size: clamp(0.8rem, 1vw, 3rem);
+}
+
+#login input:focus, #register input:focus {
+    outline: none;
+    border-color: #ffb80a;
+    box-shadow: 0 0 8px rgba(255,184,10,0.6);
+}
+
+#login button, #register button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
+    background-color: #ffb80a;
+    color: #001d3d;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: clamp(0.8rem, 1vw, 3rem);
+    transition: background 0.3s;
+}
+
+#login button:hover, #register button:hover {
+    background-color: #e6a500;
+}
+
+.cancelbtn {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.cancelbtn button {
+    background: transparent;
+    border: 1px solid #ff4d4d;
+    color: #ff4d4d;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.cancelbtn button:hover {
+    background: #ff4d4d;
+    color: white;
+}
+
+#loginError, #regError {
+    color: #ff4d4d;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* 9. Powiadomienia */
+.notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  font-family: sans-serif;
+font-size: clamp(0.9rem, 1.5vw, 10rem);
+  display: none;
+  z-index: 100000;
+  text-align: center;
+  white-space: pre-wrap;
+  width: max-content;
+  max-width: 90%;
+}
+
+.notification.show {
+  display: block;
+  animation: fadeInOutNotification 3s forwards;
+}
+
+@keyframes fadeInOutNotification {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* 10. Przycisk uniwersalny (header-btn)  */
+.header-btn {
+    background: transparent;
+    border: 2px solid #ffb80a;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    color: #ffb80a;
+    transition: all 0.3s ease;
+    display: inline-block;
+    font-size: clamp(0.5rem, 1vw, 3rem);
+}
+
+.header-btn:hover {
+    background: #ffb80a;
+    color: #001d3d;
+}
+
+/* Media Query dla bardzo małych ekranów  */
+@media (max-width: 400px) {
+    #movieShowings .showing {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    #movieShowings .showing .reserveBtn {
+        width: 100%;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .headercolor {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

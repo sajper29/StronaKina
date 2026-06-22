@@ -1,0 +1,285 @@
+/* 
+   1. RESET I USTAWIENIA GLOBALNE
+    */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: Arial, Helvetica, sans-serif;
+  src: url(Pixar.ttf);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #000814;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+
+  display: none;
+  font-size: clamp(0.9rem, 1vw, 1.2rem);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* 
+   2. GŁÓWNY KONTENER 
+    */
+.settings-wrapper {
+
+  width: 80vw;
+  max-width: 80vw !important;
+  min-width: 80vw;
+  margin: 0 auto;
+  
+  /* Dynamiczne odstępy */
+  padding-top: clamp(60px, 10vh, 100px);
+  padding-bottom: 60px;
+  padding-left: 0;
+  padding-right: 0;
+  
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Tytuł strony */
+.settings-wrapper h1 {
+  text-align: center;
+  color: #ffb80a;
+
+  font-size: clamp(2.5rem, 5vw, 6rem);
+  margin-bottom: clamp(40px, 6vh, 80px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 4px 10px rgba(255,184,10,0.2);
+}
+
+/* 
+   3. SIATKA UKŁADU 
+    */
+.settings-grid {
+  display: grid;
+  /* Lewa kolumna węższa, prawa szersza */
+  grid-template-columns: 1fr 1.5fr; 
+  gap: clamp(30px, 4vw, 60px);
+  align-items: start;
+}
+
+/* 
+   4. PANELE (KARTY)
+    */
+.left-panel, .form-box {
+  background: #001d3d;
+  padding: clamp(25px, 3vw, 50px);
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+
+  border: 2px solid rgba(255,184,10,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.left-panel:hover, .form-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+  border-color: #ffb80a;
+}
+
+/* Lewy panel   */
+.left-panel h2 {
+  color: #fff;
+  border-bottom: 3px solid #ffb80a;
+  padding-bottom: 15px;
+  margin-top: 0;
+  margin-bottom: 30px;
+  font-size: clamp(1.5rem, 2.5vw, 3rem);
+  font-weight: 700;
+}
+
+.info-row {
+  margin-bottom: clamp(20px, 3vw, 40px);
+  display: flex;
+  flex-direction: column; 
+  gap: 8px;
+}
+
+.label {
+  color: #ffb80a;
+  font-weight: bold;
+  opacity: 0.9;
+  font-size: clamp(1rem, 1.2vw, 1.8rem);
+}
+
+.value {
+  color: #e0e0e0;
+  word-break: break-all; 
+  background: rgba(0,0,0,0.3);
+  padding: clamp(10px, 1.2vw, 20px);
+  border-radius: 8px;
+  font-size: clamp(1.1rem, 1.4vw, 2rem);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/*  Prawy panel (Formularze)  */
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(30px, 4vw, 60px);
+}
+
+.form-box h3 {
+  color: #ffd24a;
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: clamp(1.4rem, 2vw, 2.5rem);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Elementy formularza */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  font-weight: 700;
+  font-size: clamp(1rem, 1.2vw, 1.6rem);
+  color: #ccc;
+}
+
+input {
+  width: 100%;
+  padding: clamp(12px, 1.5vw, 20px);
+  border-radius: 10px;
+  border: 2px solid #ffb80a;
+  background: #000814;
+  color: white;
+
+  font-size: clamp(1.1rem, 1.3vw, 1.8rem);
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 15px rgba(255,184,10,0.4);
+  background: #0a1a2f;
+}
+
+button {
+  margin-top: 35px;
+  width: 100%;
+  background: #ffb80a;
+  color: #001d3d;
+  border: none;
+  padding: clamp(15px, 1.8vw, 25px);
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 800;
+
+  font-size: clamp(1.2rem, 1.5vw, 2rem);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+button:hover {
+  background: #ffd24a;
+  transform: scale(1.03);
+  box-shadow: 0 5px 20px rgba(255,184,10,0.4);
+}
+
+
+.back-btn {
+  display: block;
+  width: 100%;
+  max-width: clamp(200px, 30vw, 400px);
+  margin: 60px auto 0 auto;
+  background: transparent;
+  border: 3px solid #ff4d4d;
+  color: #ff4d4d;
+  font-size: clamp(1.2rem, 1.5vw, 2.2rem);
+}
+
+.back-btn:hover {
+  background: #ff4d4d;
+  color: white;
+  box-shadow: 0 5px 25px rgba(255, 77, 77, 0.4);
+  transform: scale(1.05);
+}
+
+/* 
+   5. POWIADOMIENIA
+    */
+.notification {
+  display: none;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  font-size: clamp(1rem, 1.2vw, 1.5rem);
+  animation: fadeIn 0.3s;
+}
+
+.notification.show {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 
+   6. RESPONSYWNOŚĆ (MEDIA QUERIES)
+    */
+
+
+@media (max-width: 1000px) {
+  .settings-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+
+  .info-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 15px;
+  }
+  
+  .value {
+    background: transparent;
+    padding: 0;
+    border: none;
+    text-align: right;
+  }
+}
+
+/* Telefony (poniżej 600px) */
+@media (max-width: 600px) {
+  .info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .value {
+    text-align: left;
+    margin-top: 5px;
+    width: 100%;
+  }
+
+  .back-btn {
+    width: 100%;
+    max-width: none;
+  }
+}

@@ -1,0 +1,527 @@
+/* 1. Reset i ustawienia globalne */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: Arial, Helvetica, sans-serif;
+  src: url(Pixar.ttf);
+}
+
+body {
+  margin: 0;
+  padding-bottom: 10px;
+  background: #000814;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+
+  display: none; 
+
+  font-size: clamp(0.85rem, 1.2vw, 1.2rem);
+}
+
+/* 2. Główny kontener treści */
+main {
+
+  padding-top: clamp(220px, 25vh, 320px);
+  
+  width: 80vw;
+  max-width: 80vw !important;
+  
+  margin: 0 auto;
+  padding-left: clamp(15px, 3vw, 40px);
+  padding-right: clamp(15px, 3vw, 40px);
+}
+
+/* 3. Header */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+  background: linear-gradient(90deg, #ffb80a 0%, #ffd24a 50%, #ffb80a 100%);
+}
+
+/* Kontener nagłówka */
+.headercolor {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap; 
+  gap: clamp(0.5rem, 2.5vw, 3rem);
+  padding: clamp(0.5rem, 1vw, 0.8rem) clamp(1rem, 2vw, 2rem);
+  border-bottom: 2px solid #000;
+  height: auto; 
+  min-height: 10vh;
+}
+
+/* Logo */
+.headercolor img {
+  height: clamp(45px, 8vw, 100px) !important;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.headercolor img:hover {
+  transform: scale(1.1);
+}
+
+/* Tytuł */
+.headertext1 {
+  color: #000814;
+  font-size: clamp(2rem, 4vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.6);
+  transition: color 0.3s;
+}
+
+.headertext1:hover {
+  color: #662837;
+}
+
+/* Kontener przycisków w headerze */
+#listbtns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#listbtns .listag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap; 
+  gap: clamp(0.5rem, 1vw, 1.2rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Przyciski w headerze  */
+#listbtns .listag li a,
+#listbtns .listag .header-btn,
+#logbutton,
+#regbutton {
+  background: transparent;
+  border: 2px solid #000814;
+  color: #000814;
+  padding: clamp(0.6rem, 1vw, 1rem) clamp(1rem, 1.5vw, 1.8rem);
+  font-size: clamp(0.9rem, 1vw, 2rem);
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: clamp(120px, 11vw, 190px); 
+  text-align: center;
+  white-space: nowrap;
+}
+
+#listbtns .listag li a:hover,
+#listbtns .listag .header-btn:hover,
+#logbutton:hover,
+#regbutton:hover {
+  background: #000814;
+  color: #ffb80a;
+  transform: scale(1.05);
+}
+
+/* Pasek informacyjny */
+.infobar {
+  width: 100%;
+  background: #001d3d;
+  color: #ffb80a;
+  padding: clamp(0.5rem, 1vh, 0.8rem) 0;
+  font-size: clamp(0.75rem, 1vw, 2rem); 
+  font-weight: 500;
+  border-bottom: 2px solid #ffb80a;
+  text-shadow: 0 0 4px rgba(255, 184, 10, 0.6);
+  z-index: 999;
+  text-align: center;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/*Sekcja Biblioteki i Filtry */
+
+.sectioncolor1 h1 {
+  font-size: clamp(1.8rem, 4vw, 3rem); 
+  margin-left: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Filtry i Wyszukiwarka - Responsywne */
+.filters-container {
+    background: #001d3d;
+    border: 2px solid #ffb80a;
+    padding: clamp(15px, 2.5vw, 30px);
+    border-radius: 15px;
+    display: flex;
+    gap: clamp(10px, 1.5vw, 20px);
+    flex-wrap: wrap; 
+    margin-bottom: clamp(20px, 4vw, 40px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+.searchbar, .filter-select {
+    padding: clamp(10px, 1.2vw, 14px);
+    border-radius: 8px;
+    border: 2px solid #ffb80a;
+    background: #000814;
+    color: #ffb80a;
+    font-weight: 600;
+    font-size: clamp(0.9rem, 1.1vw, 3.0rem);
+}
+
+.searchbar { flex: 999 1 250px; } 
+.filter-select { flex: 1 1 150px; }
+
+/* Przełącznik widoku (Kafelki/Lista) */
+.view-switch {
+    display: flex;
+    gap: 8px;
+    background: #000814;
+    padding: 6px;
+    border-radius: 10px;
+    flex: 1 1 auto;
+    justify-content: center;
+}
+
+.view-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: #ffb80a;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: clamp(0.9rem, 1.1vw, 2rem);
+    white-space: nowrap;
+    flex: 1;
+}
+
+.view-btn.active {
+    background: #ffb80a;
+    color: #001d3d;
+}
+
+/* Toggle: Aktualnie w kinie */
+.playing-toggle-box {
+    background: #001d3d;
+    border-left: 6px solid #ffb80a;
+    padding: clamp(15px, 2vw, 25px);
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.playing-title {
+    font-size: clamp(1.1rem, 2.5vw, 5rem);
+    font-weight: 800;
+    color: #ffb80a;
+    margin: 0;
+}
+
+.playing-switch {
+    width: clamp(55px, 6vw, 90px);
+    height: clamp(28px, 3.5vw, 40px);
+    background: #000814;
+    border: 2px solid #ffb80a;
+    border-radius: 20px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.playing-switch::after {
+    content: "";
+    position: absolute;
+    width: clamp(20px, 2.5vw, 24px);
+    height: clamp(20px, 2.5vw, 24px);
+    background: #ffb80a;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 4px;
+    transition: 0.3s ease;
+}
+
+.playing-switch.active { background: #ffb80a; }
+.playing-switch.active::after { 
+    left: auto;
+    right: 4px; 
+    background: #001d3d; 
+}
+
+/* Lista Filmów (Grid i List) */
+#movieList {
+    display: grid;
+    gap: clamp(15px, 3vw, 35px);
+}
+
+/* Widok Kafelkowy (Responsywny Grid) */
+.view-grid {
+    grid-template-columns: repeat(auto-fill, minmax(clamp(140px, 15vw, 500px), 1fr));
+}
+
+.view-grid .movie-card {
+    background: #001d3d;
+    border: 2px solid rgba(255,184,10,0.2);
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s;
+    height: 100%;
+}
+
+.view-grid .movie-card:hover {
+    transform: translateY(-8px);
+    border-color: #ffb80a;
+    box-shadow: 0 10px 30px rgba(255,184,10,0.3);
+}
+
+.view-grid .movie-card img {
+    width: 100%;
+    aspect-ratio: 2/3; 
+    object-fit: cover;
+}
+
+.view-grid .movie-text {
+    padding: clamp(10px, 1.5vw, 20px);
+    text-align: center;
+}
+
+.view-grid .movie-desc {
+    display: none !important;
+}
+
+/* Widok Listy */
+.view-list {
+    grid-template-columns: 1fr;
+}
+
+.view-list .movie-card {
+    background: #001d3d;
+    display: flex;
+    flex-direction: row;
+    border-radius: 15px;
+    border: 2px solid rgba(255,184,10,0.2);
+    overflow: hidden;
+    align-items: center;
+}
+
+.view-list .movie-card img {
+    width: clamp(100px, 10vw, 400px);
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.view-list .movie-text {
+    padding: clamp(15px, 2vw, 25px);
+    flex: 1;
+}
+
+.view-list .movie-desc {
+    display: block;
+    color: #ccc;
+    font-size: 0.95rem;
+    margin-top: 10px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Media Query dla listy na bardzo wąskich ekranach */
+@media (max-width: 500px) {
+    .view-list .movie-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .view-list .movie-card img {
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+    }
+}
+
+.movie-title {
+    color: #ffb80a;
+    font-size: clamp(1.1rem, 1.5vw, 4rem);
+    font-weight: 700;
+    margin: 0;
+}
+
+.movie-meta {
+    color: #ffd24a;
+    font-size: clamp(0.5rem, 0.9vw, 2rem);
+    opacity: 0.8;
+}
+
+/* Formularze (Login i Rejestracja)*/
+#login, 
+#register {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+
+  width: clamp(280px, 85vw, 420px);
+  max-height: 85vh;
+  overflow-y: auto;
+  
+  font-size: clamp(0.85rem, 1vw, 3rem);
+  padding: 2em;
+  
+  background-color: #0a1a2f;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+  z-index: 3000;
+  transition: all 0.3s ease;
+  color: #fff;
+  border: 2px solid #ffb80a;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#login::-webkit-scrollbar, 
+#register::-webkit-scrollbar {
+  display: none;
+}
+
+#login.show, 
+#register.show {
+  display: block;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+#login h2, 
+#register h2 {
+  text-align: center;
+  margin-bottom: 1em;
+  color: #ffb80a;
+  font-weight: 700;
+  font-size: 1.8em; 
+}
+
+#login form, 
+#register form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1em;
+}
+
+.form-group label {
+  margin-bottom: 0.3em;
+  font-weight: 600;
+  color: #ffb80a;
+  font-size: 1em;
+}
+
+#login input, 
+#register input {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 0.8em;
+  padding: 0.7em;
+  font-size: 1em;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #001028;
+  color: #fff;
+}
+
+#login input:focus, 
+#register input:focus {
+  outline: none;
+  border-color: #ffb80a;
+  box-shadow: 0 0 8px rgba(255,184,10,0.6);
+}
+
+#login button, 
+#register button {
+  font-size: 1.1em;
+  padding: 0.7em;
+  margin-top: 0.5em;
+  border-radius: 8px;
+  border: none;
+  background-color: #ffb80a;
+  color: #0a1a2f;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+#login button:hover, 
+#register button:hover {
+  background-color: #e6a500;
+}
+
+#loginError, #regError {
+  color: #ff4d4d;
+  font-size: 0.9em;
+  margin-top: 0.5em;
+  text-align: center;
+}
+
+/*UI i Powiadomienia */
+.notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  font-family: sans-serif;
+  font-size: 16px;
+  display: none;
+  z-index: 100000;
+  text-align: center;
+  white-space: pre-wrap;
+}
+
+.notification.show {
+  display: block;
+  animation: fadeInOutNotification 3s forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInOutNotification {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}

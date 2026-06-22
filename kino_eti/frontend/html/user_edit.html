@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Szczegóły użytkownika</title>
+    <link rel="stylesheet" href="/css/user_edit.css">
+    <meta name="keywords" content="kino,eti,ETI,internet,biblioteka filmowa">
+    <meta name="description" content="Cinema App">
+    <meta name="author" content="Maślanka Szymon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/img/logo.ico">
+</head>
+<body style="display:none;">
+
+<div id="notification-container"></div>
+<div id="confirm-container" class="confirm-container">
+  <div class="confirm-box">
+    <p id="confirm-message">Czy na pewno chcesz anulować rezerwację?</p>
+    <div class="confirm-actions">
+      <button id="confirm-yes">Tak</button>
+      <button id="confirm-no">Nie</button>
+    </div>
+  </div>
+</div>
+<header>
+    <h1>Szczegóły użytkownika</h1>
+    <button id="backBtn">← Wróć</button>
+</header>
+
+<main class="user-wrapper">
+
+    <!-- DANE UŻYTKOWNIKA -->
+    <section class="panel">
+        <h2>Dane użytkownika</h2>
+
+        <form id="userForm">
+            <label>Nazwa użytkownika</label>
+            <input type="text" id="username">
+
+            <label>Email</label>
+            <input type="email" id="email">
+
+            <label>Nowe hasło (opcjonalnie)</label>
+            <input type="password" id="password">
+
+            <button type="submit">Zapisz zmiany</button>
+        </form>
+    </section>
+
+    <!-- KOMENTARZE -->
+    <section class="panel">
+        <h2>Komentarze</h2>
+        <div id="commentsList"></div>
+    </section>
+
+    <!-- REZERWACJE -->
+    <section class="panel">
+        <h2>Rezerwacje</h2>
+        <div id="reservationsList"></div>
+    </section>
+
+</main>
+
+<script src="/js/user_edit.js"></script>
+</body>
+</html>

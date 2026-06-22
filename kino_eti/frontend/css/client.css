@@ -1,0 +1,752 @@
+/* 1. Reset i ustawienia globalne */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: Arial, Helvetica, sans-serif;
+  src: url(Pixar.ttf);
+}
+
+body {
+  margin: 0;
+  padding-bottom: 10px;
+  background: #000814;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+
+  display: none; 
+
+  font-size: clamp(0.85rem, 1.2vw, 1.2rem);
+}
+
+/* 2. Header (PC i style globalne) */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+  background: linear-gradient(90deg, #ffb80a 0%, #ffd24a 50%, #ffb80a 100%);
+}
+
+/* Kontener nagłówka */
+.headercolor {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 2.5vw, 3rem);
+  padding: clamp(0.4rem, 1vw, 0.8rem) clamp(1rem, 2vw, 2rem);
+  border-bottom: 2px solid #000;
+  height: auto; 
+}
+
+/* Logo */
+.headercolor img {
+  height: clamp(45px, 8vw, 100px);
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.headercolor img:hover {
+  transform: scale(1.1);
+}
+
+/* Tytuł */
+.headertext1 {
+  color: #000814;
+  font-size: clamp(2rem, 4vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.6);
+  transition: color 0.3s;
+}
+
+.headertext1:hover {
+  color: #662837;
+}
+
+/* Kontener przycisków w headerze */
+#listbtns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#listbtns .listag {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 1vw, 1.2rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Przyciski w headerze (PC) */
+#listbtns .listag li a,
+#listbtns .listag .header-btn,
+#logbutton,
+#regbutton {
+  background: transparent;
+  border: 2px solid #000814;
+  color: #000814;
+  padding: clamp(0.6rem, 1vw, 1rem) clamp(1rem, 1.5vw, 1.8rem);
+  font-size: clamp(1rem, 1.2vw, 1.3rem);
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: clamp(130px, 11vw, 190px); 
+  text-align: center;
+}
+
+#listbtns .listag li a:hover,
+#listbtns .listag .header-btn:hover,
+#logbutton:hover,
+#regbutton:hover {
+  background: #000814;
+  color: #ffb80a;
+  transform: scale(1.05);
+}
+
+/* Pasek informacyjny */
+.infobar {
+  width: 100%;
+  background: #001d3d;
+  color: #ffb80a;
+  padding: clamp(0.5rem, 1vh, 0.8rem) 0;
+  font-size: clamp(0.85rem, 1vw, 2rem);
+  font-weight: 500;
+  border-bottom: 2px solid #ffb80a;
+  text-shadow: 0 0 4px rgba(255, 184, 10, 0.6);
+  z-index: 999;
+  text-align: center;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* 3. Header mobile (specyficzne) */
+.mobile-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(90deg, #ffb80a 0%, #ffd24a 50%, #ffb80a 100%);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  z-index: 2000;
+  padding-bottom: 1vh;
+}
+
+.m-header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4vw;
+  border-bottom: 2px solid #000;
+}
+
+.m-left {
+  display: flex;
+  align-items: center;
+  gap: 3vw;
+}
+
+/* Logo mobile */
+.m-logo {
+  height: clamp(40px, 15vw, 70px);
+  width: auto;
+}
+
+.m-title {
+  color: #000814;
+  font-size: 7vw;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.6);
+}
+
+.hamburger {
+  font-size: 9vw;
+  background: transparent;
+  border: 2px solid #000814;
+  border-radius: 10px;
+  color: #000814;
+  padding: 1vw 3vw;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+/* Menu nawigacji mobile */
+.m-nav {
+  display: none;
+  background: #ffb80a;
+  border-bottom: 2px solid #000;
+  padding: 4vw;
+}
+
+.m-nav.active {
+  display: block;
+}
+
+.m-link {
+  display: block;
+  padding: 3vw 0;
+  color: #000814;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 2px solid #000814;
+  font-size: 5vw;
+}
+
+.m-btn-log,
+.m-btn-reg {
+  width: 100%;
+  padding: 3vw;
+  margin-top: 3vw;
+  border-radius: 10px;
+  font-size: 5vw;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.m-btn-log {
+  background: #000814;
+  color: #ffb80a;
+  border: 2px solid #000814;
+}
+
+.m-btn-reg {
+  background: transparent;
+  border: 2px solid #000814;
+  color: #000814;
+}
+
+.m-infobar {
+  background: #001d3d;
+  color: #ffb80a;
+  text-align: center;
+  padding: 1.5vh 3vw;
+  border-bottom: 2px solid #ffb80a;
+  font-size: 4.5vw;
+}
+
+/* 4. Karuzele (główna i filmowe) */
+#carouselExampleIndicators {
+  margin-top: clamp(7rem, 12vh, 9rem);
+  overflow: hidden;
+  max-height: 65vh;
+  z-index: 1;
+}
+
+#carouselExampleIndicators .carousel-item {
+  height: 65vh;
+  position: relative;
+}
+
+#carouselExampleIndicators img {
+  width: 100%;
+  height: 100%; 
+  object-fit: cover;
+  object-position: center top;
+}
+
+#carouselExampleIndicators .carousel-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.15),
+    rgba(0,0,0,0.45)
+  );
+}
+
+/* Animacja zoomowania bannera */
+.carousel-item img {
+  transform: scale(1.05);
+  transition: transform 8s ease;
+}
+
+.carousel-item.active img {
+  transform: scale(1.1);
+}
+
+.film-carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.sectioncolor1 h1 {
+  font-size: clamp(1.5rem, 3vw, 2.5rem); 
+  margin-left: 1rem;
+}
+
+.carousel-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.carousel-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: clamp(0.8rem, 1vw, 1.2rem); 
+  padding: 1rem;
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+
+.carousel-slide {
+  flex: 0 0 auto;
+  width: 16vw; 
+  min-width: 140px; 
+  transition: transform 0.3s ease;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+  cursor: pointer;
+}
+
+.carousel-slide:hover {
+  transform: scale(1.05);
+}
+
+.carousel-btn {
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  font-size: clamp(2rem, 3vw, 3.5rem); 
+  cursor: pointer;
+  padding: 0 10px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  transition: background 0.2s;
+}
+
+.carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+.carousel-btn.prev { left: 0; }
+.carousel-btn.next { right: 0; }
+
+/* 5. Formularze (Login i Rejestracja) */
+#login, 
+#register {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(300px, 30vw, 380px);
+  background-color: #0a1a2f;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+  padding: 25px;
+  z-index: 2001; 
+  transition: all 0.3s ease;
+  color: #fff;
+  border: 2px solid #ffb80a;
+}
+
+#login.show, 
+#register.show {
+  display: block;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+#login h2, 
+#register h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ffb80a;
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+}
+
+#login form, 
+#register form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #ffb80a;
+}
+
+#login input, 
+#register input {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  padding: clamp(0.6rem, 1vw, 0.8rem);
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: #001028;
+  color: #fff;
+}
+
+#login input:focus, 
+#register input:focus {
+  outline: none;
+  border-color: #ffb80a;
+  box-shadow: 0 0 8px rgba(255,184,10,0.6);
+}
+
+#login button, 
+#register button {
+  font-size: 1rem;
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: #ffb80a;
+  color: #0a1a2f;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+#login button:hover, 
+#register button:hover {
+  background-color: #e6a500;
+}
+
+#loginError, #regError {
+  color: #ff4d4d;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  text-align: center;
+}
+
+/* 6. Przyciski i UI (Kup bilet, powiadomienia, konto) */
+
+/* Przycisk Kup Bilet */
+.buttonlos {
+  width: clamp(200px, 18vw, 320px);
+  height: clamp(55px, 6vw, 80px);
+  font-size: clamp(1.1rem, 1.6vw, 1.8rem);
+  
+  font-weight: 700;
+  color: black;
+  background: linear-gradient(90deg, #ffb80a, #ffd24a);
+  border: 2px solid #ffb80a;
+  border-radius: 12px;
+  font-family: 'Arial', sans-serif;
+  position: fixed;   
+  bottom: 20px;         
+  left: 50%;            
+  transform: translateX(-50%); 
+  z-index: 1000;        
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 184, 10, 0.4);
+  transition: all 0.3s ease;
+}
+
+.buttonlos:hover {
+  background: linear-gradient(90deg, #ffd24a, #ffb80a);
+  transform: translateX(-50%) scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 184, 10, 0.6);
+}
+
+.buttonlos:active {
+  background: #e6a500;
+  transform: translateX(-50%) scale(0.98);
+}
+
+/* Powiadomienia */
+.notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  font-family: sans-serif;
+  font-size: 16px;
+  display: none;
+  z-index: 100000;
+  text-align: center;
+  white-space: pre-wrap;
+}
+
+.notification.show {
+  display: block;
+  animation: fadeInOutNotification 3s forwards;
+}
+
+/* Dropdown konta (PC) */
+.account-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.account-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  min-width: clamp(200px, 15vw, 300px);
+  
+  background: #0a1a2f;
+  border: 1px solid rgba(255,184,10,0.3);
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  z-index: 2000;
+}
+
+.account-nick {
+  font-weight: 700;
+  color: #ffb80a;
+  margin-bottom: 8px;
+  word-break: break-word;
+  font-size: clamp(1.1rem, 1.5vw, 1.6rem);
+}
+
+.account-action {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: none;
+  text-align: left;
+  padding: clamp(8px, 0.8vw, 14px) clamp(10px, 1vw, 16px);
+  font-size: clamp(1rem, 1.3vw, 1.4rem);
+  
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.account-action:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.account-logout{
+  color: #ff6b6b;
+}
+
+.dropdown-sep {
+  border: 0;
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+  margin: 6px 0;
+}
+
+.user-only, .admin-only {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInOutNotification {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* 7. Media Queries i logika wyświetlania */
+
+
+@media (min-width: 577px) {
+  .mobile-header { display: none; }
+  .pc-header { display: block; }
+  .headercolor { display: flex; }
+}
+
+
+@media (max-width: 576px) {
+  .pc-header { display: none; }
+  .mobile-header { display: block; }
+  
+  .carousel-btn { display: none; }
+  
+  .m-logo { height: 20vw; }
+  .m-infobar { padding: 1vh 3vw; }
+  .mobile-header { padding-bottom: 0; }
+  
+
+  #carouselExampleIndicators {
+    margin-top: 20vh;
+  }
+  #carouselExampleIndicators .carousel-item {
+    height: 40vh;
+  }
+  #carouselExampleIndicators img {
+    object-position: center center;
+  }
+
+
+  .carousel-slide {
+    width: 40vw; 
+    flex-shrink: 0;
+  }
+  
+  /* Formularze mobilne z ukrytym paskiem przewijania */
+  #login, #register {
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    width: 90%; 
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    padding: 20px 15px;
+    z-index: 3000;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  #login::-webkit-scrollbar,
+  #register::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Etykiety formularzy mobile */
+  #login .form-group label, 
+  #register .form-group label {
+    font-size: clamp(1.1rem, 5.5vw, 1.4rem);
+    margin-bottom: 2vw;
+  }
+
+  #login h2, #register h2 { font-size: 7vw; }
+  #login input, #register input { font-size: 4.8vw; padding: 3vw 2vw; }
+  #login button, #register button { font-size: 5.2vw; padding: 3.5vw; }
+
+  /* Przycisk biblioteka (Mobile) */
+  #libraryLinkMobile {
+    display: block;        
+    width: 100%;           
+    text-align: center;
+    padding: 3vw 0;           
+    font-size: 5vw;        
+    color: #000814;
+    background: #ffb80a;
+    border: 2px solid #000814;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    z-index: 3000;           
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    margin-bottom: 2vw;
+    box-sizing: border-box;
+  }
+
+  /* Wymuszenie pełnej szerokości */
+  #accountMenuItemMobile,
+  .account-wrapper {
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Przycisk Moje konto (Mobile) */
+  #accountBtnMobile {
+    display: block;
+    width: 100%;
+    padding: 3vw 0;
+    font-size: 5vw;
+    font-weight: 700;
+    color: #000814;
+    background: #ffb80a;
+    border: 2px solid #000814;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    margin-top: 2vw;
+    margin-bottom: 2vw;
+    box-sizing: border-box;
+  }
+
+  #accountBtnMobile:hover {
+    background: #ffd24a;
+  }
+
+  /* Dropdown konta (Mobile) */
+  #accountDropdownMobile {
+    display: none;            
+    flex-direction: column;
+    position: relative;      
+    background: #000814;
+    border: 2px solid #000814;
+    border-radius: 10px;
+    padding: 1vw 0;
+    width: 100%;
+    z-index: 3000;
+    margin-top: 0;
+  }
+
+  .account-wrapper.active #accountDropdownMobile {
+    display: flex;
+  }
+
+  #accountDropdownMobile .account-nick {
+    padding: 2vw 3vw;
+    font-weight: 700;
+    color: white;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+    font-size: clamp(1rem, 5vw, 1.3rem);
+  }
+
+  #accountDropdownMobile .account-action {
+    padding: 3vw 3vw;
+    font-size: clamp(0.9rem, 4.5vw, 1.2rem);
+    color: white;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  #accountDropdownMobile .account-action:hover {
+    background: #000814;
+    font-weight: 700;
+  }
+
+  #accountDropdownMobile .account-logout {
+    color: #ff6b6b;
+  }
+}

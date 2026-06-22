@@ -1,0 +1,471 @@
+/* 1. Reset i ustawienia globalne */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: Arial, Helvetica, sans-serif;
+  src: url(Pixar.ttf);
+}
+
+body {
+  margin: 0;
+  padding-bottom: 20px;
+  background: #000814;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  display: none;
+  font-size: clamp(0.9rem, 1.1vw, 1.2rem);
+  overflow-x: hidden;
+}
+
+/* 2. Header */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+  background: linear-gradient(90deg, #ffb80a 0%, #ffd24a 50%, #ffb80a 100%);
+}
+
+.headercolor {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap; 
+  gap: clamp(1rem, 2.5vw, 3rem);
+  padding: clamp(0.5rem, 1vw, 0.8rem) clamp(1rem, 2vw, 2rem);
+  border-bottom: 2px solid #000;
+  min-height: 10vh;
+}
+
+/* Logo */
+.headercolor img {
+  height: clamp(45px, 8vw, 80px) !important;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.headercolor img:hover {
+  transform: scale(1.1);
+}
+
+/* Tytuł */
+.headertext1 {
+  color: #000814;
+  font-size: clamp(2rem, 4vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.6);
+  transition: color 0.3s;
+}
+
+.headertext1:hover {
+  color: #662837;
+}
+
+/* Kontener przycisków */
+#listbtns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#listbtns .listag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(0.5rem, 1vw, 1.2rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Przyciski nawigacji */
+#listbtns .listag li a,
+#listbtns .listag .header-btn,
+#accountBtn {
+  background: transparent;
+  border: 2px solid #000814;
+  color: #000814;
+  padding: clamp(0.6rem, 1vw, 0.8rem) clamp(1rem, 1.5vw, 1.8rem);
+  font-size: clamp(0.9rem, 1.2vw, 2rem);
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
+}
+
+#listbtns .listag li a:hover,
+#listbtns .listag .header-btn:hover,
+#accountBtn:hover {
+  background: #000814;
+  color: #ffb80a;
+  transform: scale(1.05);
+}
+
+/* Pasek informacyjny */
+.infobar {
+  width: 100%;
+  background: #001d3d;
+  color: #ffb80a;
+  padding: clamp(0.5rem, 1vh, 0.8rem) 0;
+  font-size: clamp(0.75rem, 1vw, 2rem);
+  font-weight: 500;
+  border-bottom: 2px solid #ffb80a;
+  text-shadow: 0 0 4px rgba(255, 184, 10, 0.6);
+  z-index: 999;
+  text-align: center;
+  position: relative;
+}
+
+/* 3. Dropdown "Moje konto" */
+.account-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.account-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  
+ 
+  min-width: clamp(220px, 20vw, 350px);
+  
+  background: #0a1a2f;
+  border: 1px solid rgba(255,184,10,0.3);
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  z-index: 2000;
+}
+
+.account-nick {
+  font-weight: 700;
+  color: #ffb80a;
+  margin-bottom: 8px;
+  word-break: break-word;
+  font-size: clamp(1.1rem, 1.5vw, 2.5rem);
+  text-align: left;
+}
+
+.account-action {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: none;
+  text-align: left;
+  padding: clamp(10px, 1vw, 18px);
+  font-size: clamp(1rem, 1.2vw, 2rem);
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.account-action:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.account-logout {
+  color: #ff6b6b;
+}
+
+.dropdown-sep {
+  border: 0;
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+  margin: 6px 0;
+}
+
+/* Ukrywanie elementów w zależności od roli */
+.user-only, .admin-only {
+  display: none;
+}
+
+/* 4. Główny kontener Rezerwacji  */
+.reserve-container {
+    text-align: center; 
+    padding-top: clamp(160px, 20vh, 300px);
+  
+    width: 80vw;
+    max-width: 80vw !important;
+    
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.reserve-container h1 {
+    color: #ffb80a;
+    font-weight: 800;
+    font-size: clamp(2rem, 3vw, 4rem);
+    margin-bottom: 20px;
+}
+
+/* Etykieta Ekran */
+.screen-label {
+    background: #001d3d;
+    color: #ffd24a;
+    display: inline-block;
+    width: 90%;
+    max-width: 800px;
+    padding: clamp(10px, 1.5vw, 20px);
+    margin: 20px auto 40px auto;
+    border-radius: 0 0 50px 50px; 
+    box-shadow: 0 10px 20px rgba(255, 184, 10, 0.2);
+    font-weight: bold;
+    letter-spacing: 5px;
+    font-size: clamp(1rem, 1.5vw, 2rem);
+    border-bottom: 6px solid #ffb80a;
+}
+
+/* 5. Siatka Miejsc */
+#seatsContainer {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    gap: clamp(8px, 1vw, 15px); 
+    overflow-x: auto; 
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+/* Pojedynczy rząd */
+.seat-row {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    align-items: center;
+    gap: clamp(6px, 0.8vw, 12px); 
+}
+
+/* Etykieta rzędu (A, B, C...) */
+.seat-row .row-label {
+    font-weight: bold;
+    color: #ffb80a;
+    width: clamp(30px, 3vw, 50px);
+    text-align: center;
+    font-size: clamp(1rem, 1.5vw, 2rem);
+}
+
+/* Wygląd miejsca */
+.seat {
+    width: clamp(30px, 2.5vw, 50px);
+    height: clamp(30px, 2.5vw, 50px);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-size: clamp(0.7rem, 1.2vw, 1.5rem);
+    font-weight: bold;
+    color: #000;
+}
+
+.seat.free {
+    background: #2ecc71;
+    box-shadow: 0 3px 0 #27ae60;
+}
+
+.seat.free:hover {
+    transform: translateY(-2px);
+    background: #4cd185;
+}
+
+.seat.selected {
+    background: #f1c40f;
+    box-shadow: 0 3px 0 #f39c12;
+    transform: scale(1.1);
+    color: #000;
+}
+
+.seat.taken {
+    background: #e74c3c;
+    box-shadow: 0 3px 0 #c0392b;
+    cursor: not-allowed;
+    opacity: 0.6;
+    color: #fff;
+}
+
+/* 6. Legenda */
+.legend {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: clamp(20px, 4vw, 50px);
+    font-size: clamp(0.9rem, 1.2vw, 2rem);
+    flex-wrap: wrap;
+    color: #fff;
+}
+
+.legend div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.legend .seat {
+    width: clamp(25px, 2.5vw, 40px);
+    height: clamp(25px, 2.5vw, 40px);
+    cursor: default;
+    transform: none !important;
+}
+
+/* 7. Przycisk Rezerwacji */
+.reserve-btn {
+    display: inline-block;
+    margin: 50px auto 30px auto; 
+    padding: 15px 50px;
+    font-size: clamp(1.2rem, 1.8vw, 2.5rem);
+    font-weight: bold;
+    background: #ffb80a;
+    border: 3px solid #ffb80a;
+    border-radius: 12px;
+    color: #001d3d;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(255,184,10,0.3);
+}
+
+.reserve-btn:hover {
+    background: transparent;
+    color: #ffb80a;
+    transform: scale(1.05);
+}
+
+/* 8. Modal potwierdzenia */
+.confirm-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.75);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.confirm-box {
+  background: #0a1a2f;           
+  color: #ffffff;
+  padding: clamp(30px, 3vw, 50px);
+  border-radius: 12px;
+  width: clamp(300px, 50vw, 600px);
+  border: 2px solid #ffb80a;
+  box-shadow: 0 0 25px rgba(0,0,0,0.8);
+  text-align: center;
+  animation: scaleIn 0.25s ease;
+}
+
+.confirm-box p {
+  font-size: clamp(1.1rem, 1.5vw, 2rem);
+  margin-bottom: 30px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.confirm-actions button {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: clamp(1rem, 1.2vw, 1.8rem);
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+/* Zielony — TAK */
+#confirm-yes {
+  background: #27c24c;
+  color: white;
+}
+#confirm-yes:hover { background: #1fa63f; transform: scale(1.05); }
+
+/* Czerwony — NIE */
+#confirm-no {
+  background: #e74c3c;
+  color: white;
+}
+#confirm-no:hover { background: #cf3e2e; transform: scale(1.05); }
+
+/* 9. Powiadomienia */
+#notification-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    z-index: 10001;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    pointer-events: none;
+    width: 100%;
+}
+
+.notification {
+    min-width: clamp(300px, 50vw, 600px);
+    padding: 25px 40px;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    font-size: clamp(1rem, 1.5vw, 2rem);
+    opacity: 0;
+    transform: scale(0.8); 
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.notification.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.notification.success { background-color: #27c24c; border: 2px solid #1e9a3a; }
+.notification.error { background-color: #e74c3c; border: 2px solid #c0392b; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Media Query dla bardzo małych ekranów */
+@media (max-width: 400px) {
+    .headercolor {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

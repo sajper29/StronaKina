@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pl_PL">
+<head>
+    <meta charset="UTF-8">
+    <title>ETIKINO – Szczegóły filmu</title>
+    <meta name="keywords" content="kino,eti,ETI,internet,biblioteka filmowa">
+    <meta name="description" content="Cinema App">
+    <meta name="author" content="Maślanka Szymon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/movies_bez.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/img/logo.png">
+</head>
+<body>
+
+<div id="regNotification" class="notification"></div>
+
+
+<header>
+    <div class="container-fluid headercolor">
+        <div class="d-flex justify-content-center align-items-center gap-4 flex-wrap">
+            <img src="/img/logo.png" class="img-fluid" style="height: 70px; width: auto;">
+            <h1 class="headertext1 mb-0">Kino</h1>
+
+            <div class="col justify-content-start" id="listbtns">
+                <ol class="listag d-flex align-items-center mb-0">
+                    <li><a href="index.html" class="header-btn">Strona główna</a></li>
+                    <li><a href="biblioteka_bez.html" class="header-btn">Biblioteka</a></li>
+                    <li><button onclick="toggleForm('login')" id="logbutton">Zaloguj</button></li>
+                    <li><button onclick="toggleForm('register')" id="regbutton">Zarejestruj</button></li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="infobar">
+        <div class="container-fluid text-center">
+            <strong>ETIKINO</strong> — najlepsze kino w Trójmieście • Czynne codziennie od 9:00 do 23:00 • Tel: <strong>123 456 789</strong>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+  <div class="container-fluid sectioncolor1 mb-4">
+    <div class="row">
+      <div class="col"><h1 id="movieTitle">Ładowanie…</h1></div>
+    </div>
+  </div>
+
+  <div id="movieDetails" class="sectioncolor1 p-4">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <img id="moviePoster" src="" alt="Plakat" class="img-fluid" style="border-radius:8px;">
+      </div>
+      <div class="col-md-8">
+        <div id="movieMeta" class="mb-3"></div>
+        <div id="movieDesc" class="mb-3"></div>
+        <div id="movieExtra"></div>
+        <div class="mt-4">
+          <a href="biblioteka.html" class="header-btn">◂ Powrót do biblioteki</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="error" class="notification" style="display:none;"></div>
+</main>
+  <div id="login" style="display:none;">
+  <form id="loginForm" onsubmit="return false;">
+    <h2>Logowanie</h2>
+
+    <div class="form-group">
+      <label for="loginUname">Nazwa użytkownika</label>
+      <input type="text" name="uname" id="loginUname" placeholder="Wpisz nazwę użytkownika">
+    </div>
+
+    <div class="form-group">
+      <label for="loginPsw">Hasło</label>
+      <input type="password" name="psw" id="loginPsw" placeholder="Wpisz hasło">
+    </div>
+    <div id="loginError"></div>
+    <button type="button" id="loginBtn">Zaloguj się</button>
+
+  </form>
+
+  <div class="cancelbtn">
+    <button type="button" onclick="document.getElementById('login').style.display='none'">Anuluj</button>
+  </div>
+</div>
+
+<div id="register" style="display:none;">
+  <form id="registerForm">
+    <h2>Rejestracja</h2>
+
+    <div class="form-group">
+      <label for="uname">Nazwa użytkownika</label>
+      <input type="text" name="uname" id="uname" placeholder="Wpisz nazwę użytkownika">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Adres e-mail</label>
+      <input type="email" name="email" id="email" placeholder="Wpisz adres e-mail">
+    </div>
+
+    <div class="form-group">
+      <label for="psw">Hasło</label>
+      <input type="password" name="psw" id="psw" placeholder="Wpisz hasło">
+    </div>
+
+    <div class="form-group">
+      <label for="pswConfirm">Powtórz hasło</label>
+      <input type="password" name="pswConfirm" id="pswConfirm" placeholder="Powtórz hasło">
+    </div>
+    <div id="regError"></div>
+    <button type="button" id="registerBtn">Zarejestruj</button>
+
+  </form>
+
+  <div class="cancelbtn">
+      <button type="button" onclick="document.getElementById('register').style.display='none'">Anuluj</button>
+  </div>
+</div> 
+<div id="movieShowings">
+<h4>Seanse w kinie:</h4>
+</div>
+<div id="movieComments" class="sectioncolor1 p-4 mt-4">
+
+<div id="commentsPerPageContainer" class="d-flex justify-content-between align-items-center mb-2">
+  <h4 class="commentsTitle mb-0">Komentarze:</h4>
+  <div class="d-flex align-items-center gap-2">
+    <span class="commentsLabel">Ilość komentarzy na stronę:</span>
+    <select id="commentsPerPageSelect" class="form-select w-auto">
+      <option value="10">10</option>
+      <option value="15">15</option>
+      <option value="20">20</option>
+      <option value="25">25</option>
+      <option value="30" selected>30</option>
+      <option value="40">40</option>
+      <option value="50">50</option>
+      <option value="75">75</option>
+      <option value="100">100</option>
+    </select>
+  </div>
+</div>
+
+  <div id="commentsList"></div>
+
+  <div id="addComment" class="mt-3 position-relative">
+  <textarea id="commentText" class="form-control mb-2" rows="3" placeholder="Napisz komentarz..." maxlength="300"></textarea>
+  <div id="charCount" style="position:absolute; bottom:5px; right:10px; font-size:0.85rem; color:#ccc;">
+    0 / 300
+  </div>
+  <button id="submitComment" class="header-btn mt-2">Dodaj komentarz</button>
+</div>
+<div id="commentsPagination" class="mt-2 d-flex justify-content-center align-items-center gap-2">
+  <button id="prevPage" class="header-btn">◂ Poprzednia</button>
+  <div id="pageNumbers" class="d-flex gap-1"></div>
+  <button id="nextPage" class="header-btn">Następna ▸</button>
+</div>
+
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/movies_web_bez.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Ustawienia konta – ETIKINO</title>
+    <meta name="keywords" content="kino,eti,ETI,internet,biblioteka filmowa">
+    <meta name="description" content="Cinema App">
+    <meta name="author" content="Maślanka Szymon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/client_settings.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="settings-wrapper">
+
+    <h1>Ustawienia konta</h1>
+
+    <div class="settings-grid">
+
+
+        <div class="left-panel">
+            <h2>Twoje dane</h2>
+
+            <div class="info-row">
+                <span class="label">Nazwa użytkownika:</span>
+                <span id="infoUsername" class="value">...</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Email:</span>
+                <span id="infoEmail" class="value">...</span>
+            </div>
+        </div>
+
+
+        <div class="right-panel">
+
+            <div class="form-box">
+                <h3>Zmień nazwę użytkownika</h3>
+                <div id="noteUser" class="notification"></div>
+
+                <form id="formUsername">
+                    <label>Aktualne hasło</label>
+                    <input type="password" id="currentPasswordUser" required>
+                    <label>Nowa nazwa użytkownika</label>
+                    <input type="text" id="newUsername" required>
+                    <label>Powtórz nową nazwę</label>
+                    <input type="text" id="confirmNewUsername" required>
+                    <button type="submit">Zapisz</button>
+                </form>
+            </div>
+
+
+            <div class="form-box">
+                <h3>Zmień email</h3>
+                <div id="noteEmail" class="notification"></div>
+
+                <form id="formEmail">
+                    <label>Aktualne hasło</label>
+                    <input type="password" id="currentPasswordEmail" required>
+                    <label>Nowy email</label>
+                    <input type="email" id="newEmail" required>
+                    <label>Powtórz nowy email</label>
+                    <input type="email" id="confirmNewEmail" required>
+                    <button type="submit">Zapisz</button>
+                </form>
+            </div>
+
+
+            <div class="form-box">
+                <h3>Zmień hasło</h3>
+                <div id="notePass" class="notification"></div>
+
+                <form id="formPassword">
+                    <label>Aktualne hasło</label>
+                    <input type="password" id="currentPasswordPass" required>
+                    <label>Nowe hasło</label>
+                    <input type="password" id="newPassword" required>
+                    <label>Powtórz nowe hasło</label>
+                    <input type="password" id="confirmNewPassword" required>
+                    <button type="submit">Zapisz</button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+    <button class="back-btn" onclick="window.location.href='client.html'">Wyjdź</button>
+
+</div>
+
+<script src="/js/client_settings.js"></script>
+</body>
+</html>

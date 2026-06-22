@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pl_PL">
+<head>
+    <meta charset="UTF-8">
+    <title>ETIKINO – Biblioteka Filmów</title>
+    <meta name="keywords" content="kino,eti,ETI,internet,biblioteka filmowa">
+    <meta name="description" content="Biblioteka filmów w ETIKINO">
+    <meta name="author" content="Maślanka Szymon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/css/biblioteka_bez.css" rel="stylesheet">
+
+    <link rel="icon" type="image/x-icon" href="/img/logo.png">
+</head>
+
+<body>
+
+<div id="regNotification" class="notification"></div>
+
+<header class="pc-header">
+    <div class="container-fluid headercolor">
+        <div class="d-flex justify-content-center align-items-center gap-4 flex-wrap">
+            <img src="/img/logo.png" class="img-fluid">
+            <h1 class="headertext1 mb-0">Kino</h1>
+
+            <div class="col justify-content-start" id="listbtns">
+                <ol class="listag d-flex align-items-center mb-0">
+                    <li><a href="index.html" class="header-btn">Strona główna</a></li>
+                    <li><button onclick="toggleForm('login')" id="logbutton">Zaloguj</button></li>
+                    <li><button onclick="toggleForm('register')" id="regbutton">Zarejestruj</button></li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="infobar">
+        <div class="container-fluid text-center justify-content-center">
+            <strong>ETIKINO</strong> — najlepsze kino w Trójmieście • Czynne codziennie od 9:00 do 23:00 • Tel: <strong>123 456 789</strong>
+        </div>
+    </div>
+</header>
+
+<main class="container" >
+  <div class="container-fluid sectioncolor1 mb-4">
+    <div class="row align-items-center">
+        <div class="col"><h1 class="text-start">Biblioteka filmów</h1></div>
+    </div>
+</div>
+
+
+<div class="filters-container">
+
+    <input type="text" id="searchInput" placeholder="Szukaj po nazwie…" class="searchbar">
+
+    <select id="genreFilter" class="filter-select">
+        <option value="">Gatunek (wszystkie)</option>
+    </select>
+
+    <select id="yearFilter" class="filter-select">
+        <option value="">Rok (wszystkie)</option>
+    </select>
+
+
+    <div class="view-switch">
+        <button class="view-btn active" id="gridViewBtn">▦ Kafelki</button>
+        <button class="view-btn" id="listViewBtn">☰ Lista</button>
+    </div>
+</div>
+
+<div id="playingToggleContainer" class="container-fluid mb-4 ">
+    <div class="playing-toggle-box" id="playingToggle"> <div class="playing-switch active" id="playingSwitch"></div>
+        <h1 class="playing-title" id="playingTitle">Aktualnie w kinie — WŁ.</h1>
+    </div>
+</div>
+<div id="movieList" class="row g-4 mb-5 view-grid"></div>
+
+</main>
+  <div id="login" style="display:none;">
+  <form id="loginForm" onsubmit="return false;">
+    <h2>Logowanie</h2>
+
+    <div class="form-group">
+      <label for="loginUname">Nazwa użytkownika</label>
+      <input type="text" name="uname" id="loginUname" placeholder="Wpisz nazwę użytkownika">
+    </div>
+
+    <div class="form-group">
+      <label for="loginPsw">Hasło</label>
+      <input type="password" name="psw" id="loginPsw" placeholder="Wpisz hasło">
+    </div>
+    <div id="loginError"></div>
+    <button type="button" id="loginBtn">Zaloguj się</button>
+
+  </form>
+
+  <div class="cancelbtn">
+    <button type="button" onclick="document.getElementById('login').style.display='none'">Anuluj</button>
+  </div>
+</div>
+
+<div id="register" style="display:none;">
+  <form id="registerForm">
+    <h2>Rejestracja</h2>
+
+    <div class="form-group">
+      <label for="uname">Nazwa użytkownika</label>
+      <input type="text" name="uname" id="uname" placeholder="Wpisz nazwę użytkownika">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Adres e-mail</label>
+      <input type="email" name="email" id="email" placeholder="Wpisz adres e-mail">
+    </div>
+
+    <div class="form-group">
+      <label for="psw">Hasło</label>
+      <input type="password" name="psw" id="psw" placeholder="Wpisz hasło">
+    </div>
+
+    <div class="form-group">
+      <label for="pswConfirm">Powtórz hasło</label>
+      <input type="password" name="pswConfirm" id="pswConfirm" placeholder="Powtórz hasło">
+    </div>
+    <div id="regError"></div>
+    <button type="button" id="registerBtn">Zarejestruj</button>
+
+  </form>
+
+  <div class="cancelbtn">
+      <button type="button" onclick="document.getElementById('register').style.display='none'">Anuluj</button>
+  </div>
+</div> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/biblioteka_bez.js"></script>
+
+</body>
+</html>

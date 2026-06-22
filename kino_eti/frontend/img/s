@@ -1,0 +1,619 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Czas generowania: 13 Sty 2026, 01:16
+-- Wersja serwera: 10.4.22-MariaDB
+-- Wersja PHP: 8.1.2
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Baza danych: `kino_eti`
+--
+
+DELIMITER $$
+--
+-- Procedury
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_seats_for_screen` (IN `screenId` INT)  BEGIN
+    DECLARE total INT;
+    DECLARE seatIndex INT DEFAULT 0;
+    DECLARE seatRow CHAR(1);
+    DECLARE seatNumber INT;
+
+    -- Pobranie liczby miejsc dla sali
+    SELECT seats INTO total FROM screens WHERE id = screenId;
+
+    WHILE seatIndex < total DO
+        SET seatRow = CHAR(65 + (seatIndex DIV 12)); -- A, B, C, ...
+        SET seatNumber = (seatIndex MOD 12) + 1;     -- 1–12
+
+        INSERT INTO screen_seats (screen_id, seat_row, seat_number)
+        VALUES (screenId, seatRow, seatNumber);
+
+        SET seatIndex = seatIndex + 1;
+    END WHILE;
+END$$
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL,
+  `movie_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `content` varchar(300) DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `comments`
+--
+
+INSERT INTO `comments` (`id`, `movie_id`, `user_id`, `content`, `created_at`) VALUES
+(27, 1062829, 15, '123', '2025-11-19 10:37:43'),
+(31, 1062786, 14, '123', '2026-01-09 18:09:14'),
+(34, 1063160, 16, '2222222222222222222222222222222222222222222', '2026-01-09 20:05:22'),
+(35, 1063160, 16, 'ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', '2026-01-09 20:29:41'),
+(36, 1062786, 16, '123', '2026-01-09 20:48:06');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `movies`
+--
+
+CREATE TABLE `movies` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `poster` varchar(500) NOT NULL,
+  `description` text DEFAULT NULL,
+  `duration_minutes` int(11) NOT NULL,
+  `age_rating` varchar(10) DEFAULT '0+',
+  `release_date` date DEFAULT NULL,
+  `genre` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+--------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `on_screen`
+--
+
+CREATE TABLE `on_screen` (
+  `id` int(11) NOT NULL,
+  `movie_id` int(11) NOT NULL,
+  `screen_id` int(11) NOT NULL,
+  `start_time` datetime NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `status` enum('upcoming','ended') DEFAULT 'upcoming'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `on_screen`
+--
+
+INSERT INTO `on_screen` (`id`, `movie_id`, `screen_id`, `start_time`, `price`, `status`) VALUES
+(27, 1062785, 1, '2025-12-11 16:30:00', '30.00', 'ended'),
+(28, 1062786, 3, '2026-01-21 18:00:00', '20.00', 'upcoming'),
+(29, 1062783, 2, '2025-12-12 10:30:00', '18.00', 'ended'),
+(30, 1062784, 1, '2025-09-09 13:00:00', '27.00', 'ended'),
+(34, 1063160, 2, '2026-01-13 13:26:00', '25.00', 'upcoming'),
+(35, 1062784, 1, '2026-01-14 22:45:00', '21.00', 'upcoming'),
+(39, 1062785, 1, '2026-01-14 20:33:00', '2.00', 'upcoming');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `reservations`
+--
+
+CREATE TABLE `reservations` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `on_screen_id` int(11) NOT NULL,
+  `seat_id` int(11) NOT NULL,
+  `reserved_at` datetime DEFAULT current_timestamp(),
+  `status` enum('reserved','paid','ended') NOT NULL DEFAULT 'reserved'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `reservations`
+--
+
+INSERT INTO `reservations` (`id`, `user_id`, `on_screen_id`, `seat_id`, `reserved_at`, `status`) VALUES
+(113, 16, 28, 186, '2026-01-08 02:06:14', 'paid'),
+(117, 16, 28, 188, '2026-01-08 02:22:07', 'paid'),
+(118, 16, 28, 198, '2026-01-08 02:23:24', 'paid'),
+(119, 16, 28, 199, '2026-01-08 02:24:24', 'paid'),
+(125, 14, 28, 212, '2026-01-09 22:10:45', 'reserved');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `reviews`
+--
+
+CREATE TABLE `reviews` (
+  `id` int(11) NOT NULL,
+  `movie_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `rating` decimal(2,1) NOT NULL CHECK (`rating` >= 1 and `rating` <= 5),
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `screens`
+--
+
+CREATE TABLE `screens` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `seats` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `screens`
+--
+
+INSERT INTO `screens` (`id`, `name`, `seats`) VALUES
+(1, 'Sala 1', 100),
+(2, 'Sala 2', 80),
+(3, 'Sala 3', 50);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `screen_seats`
+--
+
+CREATE TABLE `screen_seats` (
+  `id` int(11) NOT NULL,
+  `screen_id` int(11) NOT NULL,
+  `seat_row` char(1) NOT NULL,
+  `seat_number` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `screen_seats`
+--
+
+INSERT INTO `screen_seats` (`id`, `screen_id`, `seat_row`, `seat_number`) VALUES
+(1, 1, 'A', 1),
+(2, 1, 'A', 2),
+(3, 1, 'A', 3),
+(4, 1, 'A', 4),
+(5, 1, 'A', 5),
+(6, 1, 'A', 6),
+(7, 1, 'A', 7),
+(8, 1, 'A', 8),
+(9, 1, 'A', 9),
+(10, 1, 'A', 10),
+(11, 1, 'A', 11),
+(12, 1, 'A', 12),
+(13, 1, 'B', 1),
+(14, 1, 'B', 2),
+(15, 1, 'B', 3),
+(16, 1, 'B', 4),
+(17, 1, 'B', 5),
+(18, 1, 'B', 6),
+(19, 1, 'B', 7),
+(20, 1, 'B', 8),
+(21, 1, 'B', 9),
+(22, 1, 'B', 10),
+(23, 1, 'B', 11),
+(24, 1, 'B', 12),
+(25, 1, 'C', 1),
+(26, 1, 'C', 2),
+(27, 1, 'C', 3),
+(28, 1, 'C', 4),
+(29, 1, 'C', 5),
+(30, 1, 'C', 6),
+(31, 1, 'C', 7),
+(32, 1, 'C', 8),
+(33, 1, 'C', 9),
+(34, 1, 'C', 10),
+(35, 1, 'C', 11),
+(36, 1, 'C', 12),
+(37, 1, 'D', 1),
+(38, 1, 'D', 2),
+(39, 1, 'D', 3),
+(40, 1, 'D', 4),
+(41, 1, 'D', 5),
+(42, 1, 'D', 6),
+(43, 1, 'D', 7),
+(44, 1, 'D', 8),
+(45, 1, 'D', 9),
+(46, 1, 'D', 10),
+(47, 1, 'D', 11),
+(48, 1, 'D', 12),
+(49, 1, 'E', 1),
+(50, 1, 'E', 2),
+(51, 1, 'E', 3),
+(52, 1, 'E', 4),
+(53, 1, 'E', 5),
+(54, 1, 'E', 6),
+(55, 1, 'E', 7),
+(56, 1, 'E', 8),
+(57, 1, 'E', 9),
+(58, 1, 'E', 10),
+(59, 1, 'E', 11),
+(60, 1, 'E', 12),
+(61, 1, 'F', 1),
+(62, 1, 'F', 2),
+(63, 1, 'F', 3),
+(64, 1, 'F', 4),
+(65, 1, 'F', 5),
+(66, 1, 'F', 6),
+(67, 1, 'F', 7),
+(68, 1, 'F', 8),
+(69, 1, 'F', 9),
+(70, 1, 'F', 10),
+(71, 1, 'F', 11),
+(72, 1, 'F', 12),
+(73, 1, 'G', 1),
+(74, 1, 'G', 2),
+(75, 1, 'G', 3),
+(76, 1, 'G', 4),
+(77, 1, 'G', 5),
+(78, 1, 'G', 6),
+(79, 1, 'G', 7),
+(80, 1, 'G', 8),
+(81, 1, 'G', 9),
+(82, 1, 'G', 10),
+(83, 1, 'G', 11),
+(84, 1, 'G', 12),
+(85, 1, 'H', 1),
+(86, 1, 'H', 2),
+(87, 1, 'H', 3),
+(88, 1, 'H', 4),
+(89, 1, 'H', 5),
+(90, 1, 'H', 6),
+(91, 1, 'H', 7),
+(92, 1, 'H', 8),
+(93, 1, 'H', 9),
+(94, 1, 'H', 10),
+(95, 1, 'H', 11),
+(96, 1, 'H', 12),
+(97, 1, 'I', 1),
+(98, 1, 'I', 2),
+(99, 1, 'I', 3),
+(100, 1, 'I', 4),
+(101, 2, 'A', 1),
+(102, 2, 'A', 2),
+(103, 2, 'A', 3),
+(104, 2, 'A', 4),
+(105, 2, 'A', 5),
+(106, 2, 'A', 6),
+(107, 2, 'A', 7),
+(108, 2, 'A', 8),
+(109, 2, 'A', 9),
+(110, 2, 'A', 10),
+(111, 2, 'A', 11),
+(112, 2, 'A', 12),
+(113, 2, 'B', 1),
+(114, 2, 'B', 2),
+(115, 2, 'B', 3),
+(116, 2, 'B', 4),
+(117, 2, 'B', 5),
+(118, 2, 'B', 6),
+(119, 2, 'B', 7),
+(120, 2, 'B', 8),
+(121, 2, 'B', 9),
+(122, 2, 'B', 10),
+(123, 2, 'B', 11),
+(124, 2, 'B', 12),
+(125, 2, 'C', 1),
+(126, 2, 'C', 2),
+(127, 2, 'C', 3),
+(128, 2, 'C', 4),
+(129, 2, 'C', 5),
+(130, 2, 'C', 6),
+(131, 2, 'C', 7),
+(132, 2, 'C', 8),
+(133, 2, 'C', 9),
+(134, 2, 'C', 10),
+(135, 2, 'C', 11),
+(136, 2, 'C', 12),
+(137, 2, 'D', 1),
+(138, 2, 'D', 2),
+(139, 2, 'D', 3),
+(140, 2, 'D', 4),
+(141, 2, 'D', 5),
+(142, 2, 'D', 6),
+(143, 2, 'D', 7),
+(144, 2, 'D', 8),
+(145, 2, 'D', 9),
+(146, 2, 'D', 10),
+(147, 2, 'D', 11),
+(148, 2, 'D', 12),
+(149, 2, 'E', 1),
+(150, 2, 'E', 2),
+(151, 2, 'E', 3),
+(152, 2, 'E', 4),
+(153, 2, 'E', 5),
+(154, 2, 'E', 6),
+(155, 2, 'E', 7),
+(156, 2, 'E', 8),
+(157, 2, 'E', 9),
+(158, 2, 'E', 10),
+(159, 2, 'E', 11),
+(160, 2, 'E', 12),
+(161, 2, 'F', 1),
+(162, 2, 'F', 2),
+(163, 2, 'F', 3),
+(164, 2, 'F', 4),
+(165, 2, 'F', 5),
+(166, 2, 'F', 6),
+(167, 2, 'F', 7),
+(168, 2, 'F', 8),
+(169, 2, 'F', 9),
+(170, 2, 'F', 10),
+(171, 2, 'F', 11),
+(172, 2, 'F', 12),
+(173, 2, 'G', 1),
+(174, 2, 'G', 2),
+(175, 2, 'G', 3),
+(176, 2, 'G', 4),
+(177, 2, 'G', 5),
+(178, 2, 'G', 6),
+(179, 2, 'G', 7),
+(180, 2, 'G', 8),
+(181, 3, 'A', 1),
+(182, 3, 'A', 2),
+(183, 3, 'A', 3),
+(184, 3, 'A', 4),
+(185, 3, 'A', 5),
+(186, 3, 'A', 6),
+(187, 3, 'A', 7),
+(188, 3, 'A', 8),
+(189, 3, 'A', 9),
+(190, 3, 'A', 10),
+(191, 3, 'A', 11),
+(192, 3, 'A', 12),
+(193, 3, 'B', 1),
+(194, 3, 'B', 2),
+(195, 3, 'B', 3),
+(196, 3, 'B', 4),
+(197, 3, 'B', 5),
+(198, 3, 'B', 6),
+(199, 3, 'B', 7),
+(200, 3, 'B', 8),
+(201, 3, 'B', 9),
+(202, 3, 'B', 10),
+(203, 3, 'B', 11),
+(204, 3, 'B', 12),
+(205, 3, 'C', 1),
+(206, 3, 'C', 2),
+(207, 3, 'C', 3),
+(208, 3, 'C', 4),
+(209, 3, 'C', 5),
+(210, 3, 'C', 6),
+(211, 3, 'C', 7),
+(212, 3, 'C', 8),
+(213, 3, 'C', 9),
+(214, 3, 'C', 10),
+(215, 3, 'C', 11),
+(216, 3, 'C', 12),
+(217, 3, 'D', 1),
+(218, 3, 'D', 2),
+(219, 3, 'D', 3),
+(220, 3, 'D', 4),
+(221, 3, 'D', 5),
+(222, 3, 'D', 6),
+(223, 3, 'D', 7),
+(224, 3, 'D', 8),
+(225, 3, 'D', 9),
+(226, 3, 'D', 10),
+(227, 3, 'D', 11),
+(228, 3, 'D', 12),
+(229, 3, 'E', 1),
+(230, 3, 'E', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` varchar(50) NOT NULL DEFAULT 'user' CHECK (`role` in ('user','admin')),
+  `created_at` datetime DEFAULT current_timestamp(),
+  `session_token` varchar(500) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`, `session_token`) VALUES
+(14, 'etikino_try', 'etikino_try@onet.pl', '$2b$12$i8jBK98C3MuJwi9h.9UIVePLgtfF9QlbQSZ3IrEF.ncZRona8Vyou', 'admin', '2025-11-19 10:18:14', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsInVzZXJuYW1lIjoiZXRpa2lub190cnkiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjgwMDE1MTMsImV4cCI6MTc2ODAwNTExM30.NohjHBhVtfg4CwbR1RXZnWhkZ5b5HAxcRRNWx3En3gs'),
+(15, 'user', 'user@onet.pl', '$2b$10$4V8q7ml8VsSBF2unpKrgc.vJPvYAWj.0qwCz3sQeBv9MZvfz3x0qC', 'user', '2025-11-19 10:37:00', NULL),
+(16, 'try1', 'try111@onet.pl', '$2b$10$80JXHSWbcsj60m7R74M/6uHMdBOHKvn1Ef2/4sV8n7mr7mH3T8W/C', 'user', '2025-12-02 23:26:09', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsInVzZXJuYW1lIjoidHJ5MSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzY3OTk3OTI0LCJleHAiOjE3NjgwMDE1MjR9.zPyZoykIxOTCkOAHuNo0qmfdRlMDQV6eJnEKr6psV4E'),
+(20, 'try10', 'try2@onet.pl', '$2b$10$/qnHVc/id0oGxDGia50NMes/KOCNxxdCIWCDLwK.fsjzOw7ZrFaiy', 'user', '2026-01-09 20:49:11', NULL),
+(21, 'try3', 'try3@onet.pl', '$2b$10$VDVGximkzosMGiF2XrgnTOLcB61Ci.ew/7/YlXLlVcZ7YsUJs1S/q', 'user', '2026-01-10 00:02:08', NULL),
+(22, 'try5', 'try5@onet.pl', '$2b$10$qtDOIbnGAdnT.tRCJAf5nevT8Q7HfGUPnOtbFzMB61LvpH1BleILi', 'user', '2026-01-10 00:06:32', NULL),
+(23, 'try6', 'try6@onet.pl', '$2b$10$ql595I5HTVh8BDltxkOxfuZB6J56KfdmBhjh3Fy.JKk1.L18PSOYa', 'user', '2026-01-10 00:08:35', NULL),
+(24, 'try7', 'try7@onet.pl', '$2b$10$zEGzzgTqHrpYt2zQoLqlqO6oySDzrkbxAIJ0idbhZLGp0pTvVPe4y', 'user', '2026-01-10 00:08:59', NULL);
+
+--
+-- Indeksy dla zrzutów tabel
+--
+
+--
+-- Indeksy dla tabeli `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `movie_id` (`movie_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indeksy dla tabeli `movies`
+--
+ALTER TABLE `movies`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksy dla tabeli `on_screen`
+--
+ALTER TABLE `on_screen`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `movie_id` (`movie_id`),
+  ADD KEY `screen_id` (`screen_id`);
+
+--
+-- Indeksy dla tabeli `reservations`
+--
+ALTER TABLE `reservations`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `seat_id` (`seat_id`),
+  ADD KEY `on_screen_id` (`on_screen_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indeksy dla tabeli `reviews`
+--
+ALTER TABLE `reviews`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `movie_id` (`movie_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indeksy dla tabeli `screens`
+--
+ALTER TABLE `screens`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksy dla tabeli `screen_seats`
+--
+ALTER TABLE `screen_seats`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `screen_id` (`screen_id`);
+
+--
+-- Indeksy dla tabeli `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT dla zrzuconych tabel
+--
+
+--
+-- AUTO_INCREMENT dla tabeli `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT dla tabeli `movies`
+--
+ALTER TABLE `movies`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1063755;
+
+--
+-- AUTO_INCREMENT dla tabeli `on_screen`
+--
+ALTER TABLE `on_screen`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+
+--
+-- AUTO_INCREMENT dla tabeli `reservations`
+--
+ALTER TABLE `reservations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+
+--
+-- AUTO_INCREMENT dla tabeli `reviews`
+--
+ALTER TABLE `reviews`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT dla tabeli `screens`
+--
+ALTER TABLE `screens`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT dla tabeli `screen_seats`
+--
+ALTER TABLE `screen_seats`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=231;
+
+--
+-- AUTO_INCREMENT dla tabeli `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- Ograniczenia dla zrzutów tabel
+--
+
+--
+-- Ograniczenia dla tabeli `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`),
+  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Ograniczenia dla tabeli `on_screen`
+--
+ALTER TABLE `on_screen`
+  ADD CONSTRAINT `on_screen_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`),
+  ADD CONSTRAINT `on_screen_ibfk_2` FOREIGN KEY (`screen_id`) REFERENCES `screens` (`id`);
+
+--
+-- Ograniczenia dla tabeli `reservations`
+--
+ALTER TABLE `reservations`
+  ADD CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `reservations_ibfk_2` FOREIGN KEY (`on_screen_id`) REFERENCES `on_screen` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `reservations_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Ograniczenia dla tabeli `reviews`
+--
+ALTER TABLE `reviews`
+  ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`),
+  ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Ograniczenia dla tabeli `screen_seats`
+--
+ALTER TABLE `screen_seats`
+  ADD CONSTRAINT `screen_seats_ibfk_1` FOREIGN KEY (`screen_id`) REFERENCES `screens` (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
